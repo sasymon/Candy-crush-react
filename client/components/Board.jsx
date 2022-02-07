@@ -106,10 +106,15 @@ export default function Board () {
 
     const validMoves = [
       itemDraggedId - width,
-      itemDraggedId - 1,
-      itemDraggedId + 1,
       itemDraggedId + width
     ]
+    const potentialValidMoves = [
+      itemDraggedId - 1,
+      itemDraggedId + 1
+    ]
+    if (itemDraggedId + 1 % width !== 0 && itemDraggedId % width !== 0) {
+      validMoves.push(...potentialValidMoves)
+    }
     const validMove = validMoves.includes(itemReplacedId)
 
     if (validMove) {
