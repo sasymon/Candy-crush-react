@@ -12,6 +12,18 @@ module.exports = {
       test: /\.jsx?$/,
       loader: 'babel-loader',
       exclude: /node_modules/
+    },
+    {
+      test: /\.(gif|png|jpe?g)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            name: '[name].[ext]',
+            outputPath: 'assets/images/'
+          }
+        }
+      ]
     }]
   },
   resolve: {

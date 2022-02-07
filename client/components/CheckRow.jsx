@@ -13,7 +13,7 @@
 //     if (skipCheck.includes(i)) continue
 
 //     if (rowOfFOur.every(item => colorArr[item] === colorCheck)) {
-//       return rowOfFOur.map(item => colorArr[item] = '')
+//       return rowOfFOur.map(item => colorArr[item] = blank)
 //     }
 //   }
 // }
@@ -31,7 +31,7 @@
 //     if (skipCheck.includes(i)) continue
 
 //     if (rowOfThree.every(item => colorArr[item] === colorCheck)) {
-//       return rowOfThree.map(item => colorArr[item] = '')
+//       return rowOfThree.map(item => colorArr[item] = blank)
 //     }
 //   }
 // }
