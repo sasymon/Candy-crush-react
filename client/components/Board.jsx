@@ -23,7 +23,7 @@ export default function Board () {
 
       if (colOfFour.every(item => colorArr[item] === colorCheck)) {
         // .map or ForEach?
-        (colOfFour.map(item => colorArr[item] = blank))
+        (colOfFour.forEach(item => colorArr[item] = blank))
         return true
       }
     }
@@ -35,7 +35,7 @@ export default function Board () {
       const colorCheck = colorArr[i]
 
       if (colOfThree.every(item => colorArr[item] === colorCheck)) {
-        (colOfThree.map(item => colorArr[item] = blank))
+        colOfThree.forEach(item => colorArr[item] = blank)
         return true
       }
     }
@@ -52,7 +52,7 @@ export default function Board () {
       }
       if (skipCheckFour.includes(i) === false) {
         if (rowOfFOur.every(item => colorArr[item] === colorCheck)) {
-          (rowOfFOur.map(item => colorArr[item] = blank))
+          (rowOfFOur.forEach(item => colorArr[item] = blank))
           return true
         }
       }
@@ -69,7 +69,7 @@ export default function Board () {
       }
       if (skipCheck.includes(i) === false) {
         if (rowOfThree.every(item => colorArr[item] === colorCheck)) {
-          (rowOfThree.map(item => colorArr[item] = blank))
+          (rowOfThree.forEach(item => colorArr[item] = blank))
           return true
         }
       }
@@ -77,7 +77,6 @@ export default function Board () {
   }
 
   function newItemsToEmptySpace () {
-    // const firstRow = Array.apply(null, Array(width)).map((x, i) => { return i })
     for (let i = 0; i < width * (width - 1); i++) {
       const firstRow = Array.apply(null, Array(width)).map((x, i) => { return i })
       const checkFirstRow = firstRow.includes(i)
@@ -95,23 +94,18 @@ export default function Board () {
 
   function handleOnDragStart (e) {
     setDraggedItem(e.target)
-    // console.log('Dragged item: ', e.target)
-    // console.log('Dragged: ', draggedItem)
   }
 
   function handleOnDrop (e) {
     setReplacedItem(e.target)
-    // console.log('Dropped on item: ', e.target)
-    // console.log('Replaced: ', replacedItem)
   }
 
   function handleOnDragEnd (e) {
     e.preventDefault()
-    // Getting dataIds of dragged and replaced items
-    const itemDraggedId = parseInt(draggedItem.getAttribute('data-id'))
-    const itemReplacedId = parseInt(replacedItem.getAttribute('data-id'))
-    // console.log(typeof itemReplacedId)
-    // console.log(typeof itemDraggedId)
+
+    const itemDraggedId = parseInt(draggedItem.getAttribute('id'))
+    const itemReplacedId = parseInt(replacedItem.getAttribute('id'))
+
     const validMoves = [
       itemDraggedId - width,
       itemDraggedId - 1,
@@ -120,34 +114,22 @@ export default function Board () {
     ]
     const validMove = validMoves.includes(itemReplacedId)
 
-    colorArr[itemReplacedId] = draggedItem.getAttribute('src')
-    colorArr[itemDraggedId] = replacedItem.getAttribute('src')
-
-    // console.log('Dragged ID:', itemDraggedId)
-    // console.log('Replaced ID:', itemReplacedId)
-    // console.log('Valid moves: ', validMoves)
-    // console.log(validMove)
-
-    // const [colorArr, setColorArr] = useState([])
-    // const [draggedItem, setDraggedItem] = useState(null)
-    // const [replacedItem, setReplacedItem] = useState(null)
     if (validMove) {
-      // console.log(validMoves)
-      console.log('item:', itemReplacedId)
+      colorArr[itemReplacedId] = draggedItem.getAttribute('src')
+      colorArr[itemDraggedId] = replacedItem.getAttribute('src')
+
       const isARowOfFour = checkforRowFour()
       const isAColOfFour = checkforColFour()
       const isARowOfThree = checkforRowThree()
       const isAColOfThree = checkforColThree()
 
       if (itemReplacedId && (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree)) {
-      // console.log('if: ', itemReplacedId && validMove && (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree))
         setDraggedItem(null)
         setReplacedItem(null)
       } else {
         colorArr[itemReplacedId] = replacedItem.getAttribute('src')
         colorArr[itemDraggedId] = draggedItem.getAttribute('src')
         setColorArr([...colorArr])
-      // console.log('else: ')
       }
     }
   }
@@ -177,7 +159,6 @@ export default function Board () {
     return () => clearInterval(timer)
   }, [checkforColFour, checkforRowFour, checkforRowThree, checkforColThree, newItemsToEmptySpace, colorArr])
 
-  // checkforColFour, checkforRowFour, checkforRowThree, checkforColThree, dropToEmptySpace, colorArr
   return (
     <div className='Board'>
       <div className='game'>
@@ -185,7 +166,7 @@ export default function Board () {
           return <img key={index}
             src={candyColor}
             alt={candyColor}
-            data-id={index}
+            id={index}
             draggable='true'
             onDragOver={(e) => e.preventDefault()}
             onDragEnter={(e) => e.preventDefault()}
