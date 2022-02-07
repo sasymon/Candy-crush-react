@@ -20,11 +20,9 @@ export default function Board () {
     for (let i = 0; i < (width * (width - 3)); i++) {
       const colOfFour = [i, i + width, i + (width * 2), i + (width * 3)]
       const colorCheck = colorArr[i]
-      const newArray = [...colorArr]
 
       if (colOfFour.every(item => colorArr[item] === colorCheck)) {
-        (colOfFour.forEach(item => newArray[item] = blank))
-        setColorArr(newArray)
+        (colOfFour.forEach(item => colorArr[item] = blank))
         return true
       }
     }
@@ -34,31 +32,25 @@ export default function Board () {
     for (let i = 0; i < (width * (width - 2)); i++) {
       const colOfThree = [i, i + width, i + (width * 2)]
       const colorCheck = colorArr[i]
-      const newArray = [...colorArr]
 
       if (colOfThree.every(item => colorArr[item] === colorCheck)) {
-        colOfThree.forEach(item => newArray[item] = blank)
-        setColorArr(newArray)
+        (colOfThree.forEach(item => colorArr[item] = blank))
         return true
       }
     }
   }
 
   function checkforRowFour () {
-    // console.log((46 + 2) % width)
     for (let i = 0; i < (width * width); i++) {
       const rowOfFOur = [i, i + 1, i + 2, i + 3]
       const colorCheck = colorArr[i]
       const skipCheckFour = []
-      const newArray = [...colorArr]
-
       if ((i + 1) % width === 0 || (i + 2) % width === 0 || (i + 3) % width === 0) {
         skipCheckFour.push(i)
       }
       if (skipCheckFour.includes(i) === false) {
         if (rowOfFOur.every(item => colorArr[item] === colorCheck)) {
           (rowOfFOur.forEach(item => colorArr[item] = blank))
-          setColorArr(newArray)
           return true
         }
       }
@@ -70,15 +62,12 @@ export default function Board () {
       const rowOfThree = [i, i + 1, i + 2]
       const colorCheck = colorArr[i]
       const skipCheck = []
-      const newArray = [...colorArr]
-
       if ((i + 1) % width === 0 || (i + 2) % width === 0) {
         skipCheck.push(i)
       }
       if (skipCheck.includes(i) === false) {
         if (rowOfThree.every(item => colorArr[item] === colorCheck)) {
           (rowOfThree.forEach(item => colorArr[item] = blank))
-          setColorArr(newArray)
           return true
         }
       }
@@ -89,17 +78,14 @@ export default function Board () {
     for (let i = 0; i < width * (width - 1); i++) {
       const firstRow = Array.apply(null, Array(width)).map((x, i) => { return i })
       const checkFirstRow = firstRow.includes(i)
-      const newArray = [...colorArr]
 
-      if (checkFirstRow && newArray[i] === blank) {
-        newArray[i] = candyColors[Math.floor(Math.random() * candyColors.length)]
-        setColorArr(newArray)
+      if (checkFirstRow && colorArr[i] === blank) {
+        colorArr[i] = candyColors[Math.floor(Math.random() * candyColors.length)]
       }
 
-      if ((newArray[i + width] === blank)) {
-        newArray[i + width] = colorArr[i]
-        newArray[i] = blank
-        setColorArr(newArray)
+      if ((colorArr[i + width] === blank)) {
+        colorArr[i + width] = colorArr[i]
+        colorArr[i] = blank
       }
     }
   }
@@ -115,8 +101,8 @@ export default function Board () {
   function handleOnDragEnd (e) {
     e.preventDefault()
 
-    const itemDraggedId = parseInt(draggedItem.getAttribute('id'))
-    const itemReplacedId = parseInt(replacedItem.getAttribute('id'))
+    const itemDraggedId = parseInt(draggedItem.getAttribute('data-id'))
+    const itemReplacedId = parseInt(replacedItem.getAttribute('data-id'))
 
     const validMoves = [
       itemDraggedId - width,
@@ -178,7 +164,7 @@ export default function Board () {
           return <img key={index}
             src={candyColor}
             alt={candyColor}
-            id={index}
+            data-id={index}
             draggable='true'
             onDragOver={(e) => e.preventDefault()}
             onDragEnter={(e) => e.preventDefault()}
