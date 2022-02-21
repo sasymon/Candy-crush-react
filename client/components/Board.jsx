@@ -169,42 +169,26 @@ export default function Board () {
   return (
 
     <div className='grid-container'>
-      {colorArr.map((candyColor, index) => {
-        return <div className={`grid-item-${index}`} key={index}>
-          <img key={index}
-            src={candyColor}
-            alt={candyColor}
-            data-id={index}
-            draggable='true'
-            onDragOver={(e) => e.preventDefault()}
-            onDragEnter={(e) => e.preventDefault()}
-            onDragLeave={(e) => e.preventDefault()}
-            onDrop={ handleOnDrop }
-            onDragStart={ handleOnDragStart }
-            onDragEnd={ handleOnDragEnd }
-          />
-        </div>
-      })
-      }
+      {colorArr.forEach((rows, x) => {
+        // console.log(`row ${x}: `, rows)
+        rows.map((candy, y) => {
+          // console.log(candy)
+          return <div className={`grid-item-${x}-${y}`} key={`${x}-${y}`}>
+            <img
+              src={candy}
+              alt={candy}
+              data-id={`${x}-${y}`}
+              draggable='true'
+              onDragOver={(e) => e.preventDefault()}
+              onDragEnter={(e) => e.preventDefault()}
+              onDragLeave={(e) => e.preventDefault()}
+            // onDrop={ handleOnDrop }
+            // onDragStart={ handleOnDragStart }
+            // onDragEnd={ handleOnDragEnd }
+            />
+          </div>
+        })
+      })}
     </div>
-
-  // <div className='Board'>
-  //   <div className='game'>
-  //     {colorArr.map((candyColor, index) => {
-  //       return <img key={index}
-  //         src={candyColor}
-  //         alt={candyColor}
-  //         data-id={index}
-  //         draggable='true'
-  //         onDragOver={(e) => e.preventDefault()}
-  //         onDragEnter={(e) => e.preventDefault()}
-  //         onDragLeave={(e) => e.preventDefault()}
-  //         onDrop={ handleOnDrop }
-  //         onDragStart={ handleOnDragStart }
-  //         onDragEnd={ handleOnDragEnd }
-  //       />
-  //     })}
-  //   </div>
-  // </div>
   )
 }
