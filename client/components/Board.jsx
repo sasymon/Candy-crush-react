@@ -163,10 +163,10 @@ export default function Board () {
   }, [checkforColFour, checkforRowFour, checkforRowThree, checkforColThree, newItemsToEmptySpace, colorArr])
 
   return (
-    <div className='Board'>
-      <div className='game'>
-        {colorArr.map((candyColor, index) => {
-          return <img key={index}
+    <div className='grid-container'>
+      {colorArr.map((candyColor, index) => {
+        return <div className={`grid-item-${index}`} key={index}>
+          <img key={index}
             src={candyColor}
             alt={candyColor}
             data-id={index}
@@ -178,8 +178,28 @@ export default function Board () {
             onDragStart={ handleOnDragStart }
             onDragEnd={ handleOnDragEnd }
           />
-        })}
-      </div>
+        </div>
+      })
+      }
     </div>
+
+  // <div className='Board'>
+  //   <div className='game'>
+  //     {colorArr.map((candyColor, index) => {
+  //       return <img key={index}
+  //         src={candyColor}
+  //         alt={candyColor}
+  //         data-id={index}
+  //         draggable='true'
+  //         onDragOver={(e) => e.preventDefault()}
+  //         onDragEnter={(e) => e.preventDefault()}
+  //         onDragLeave={(e) => e.preventDefault()}
+  //         onDrop={ handleOnDrop }
+  //         onDragStart={ handleOnDragStart }
+  //         onDragEnd={ handleOnDragEnd }
+  //       />
+  //     })}
+  //   </div>
+  // </div>
   )
 }
