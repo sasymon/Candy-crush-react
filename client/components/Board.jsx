@@ -180,9 +180,9 @@ export default function Board () {
               onDragOver={(e) => e.preventDefault()}
               onDragEnter={(e) => e.preventDefault()}
               onDragLeave={(e) => e.preventDefault()}
-            // onDrop={ handleOnDrop }
-            // onDragStart={ handleOnDragStart }
-            // onDragEnd={ handleOnDragEnd }
+              onDrop={ handleOnDrop }
+              onDragStart={ handleOnDragStart }
+              onDragEnd={ handleOnDragEnd }
             />
           })
         })}
