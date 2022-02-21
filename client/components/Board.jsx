@@ -169,6 +169,7 @@ export default function Board () {
   return (
 
     <div className='grid-container'>
+      {console.log(colorArr)}
       {colorArr.forEach((rows, x) => {
         // console.log(`row ${x}: `, rows)
         rows.map((candy, y) => {
