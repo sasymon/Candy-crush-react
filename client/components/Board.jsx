@@ -180,9 +180,9 @@ export default function Board () {
               alt={candy}
               data-id={`${x}-${y}`}
               draggable='true'
-              onDragOver={(e) => e.preventDefault()}
-              onDragEnter={(e) => e.preventDefault()}
-              onDragLeave={(e) => e.preventDefault()}
+              // onDragOver={(e) => e.preventDefault()}
+              // onDragEnter={(e) => e.preventDefault()}
+              // onDragLeave={(e) => e.preventDefault()}
             // onDrop={ handleOnDrop }
             // onDragStart={ handleOnDragStart }
             // onDragEnd={ handleOnDragEnd }
