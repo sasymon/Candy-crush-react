@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import Items from './Items'
+
 import blueCandy from './images/blue-candy.png'
 import greenCandy from './images/green-candy.png'
 import orangeCandy from './images/orange-candy.png'
@@ -8,12 +10,11 @@ import yellowCandy from './images/yellow-candy.png'
 import purpleCandy from './images/purple-candy.png'
 import blank from './images/blank.png'
 
+export const width = 8
+
 export default function Board () {
   const [colorArr, setColorArr] = useState([])
-  const [draggedItem, setDraggedItem] = useState(null)
-  const [replacedItem, setReplacedItem] = useState(null)
 
-  const width = 8
   const candyColors = [blueCandy, redCandy, greenCandy, yellowCandy, orangeCandy, purpleCandy]
 
   // function checkforColFour () {
@@ -90,55 +91,6 @@ export default function Board () {
   //   }
   // }
 
-  // function handleOnDragStart (e) {
-  //   setDraggedItem(e.target)
-  // }
-
-  // function handleOnDrop (e) {
-  //   setReplacedItem(e.target)
-  // }
-
-  // function handleOnDragEnd (e) {
-  //   e.preventDefault()
-
-  //   console.log(document.getElementById('0'))
-
-  //   const itemDraggedId = parseInt(draggedItem.getAttribute('id'))
-  //   const itemReplacedId = parseInt(replacedItem.getAttribute('id'))
-
-  //   const validMoves = [
-  //     itemDraggedId - width,
-  //     itemDraggedId + width
-  //   ]
-  //   const potentialValidMoves = [
-  //     itemDraggedId - 1,
-  //     itemDraggedId + 1
-  //   ]
-  //   if (itemDraggedId + 1 % width !== 0 && itemDraggedId % width !== 0) {
-  //     validMoves.push(...potentialValidMoves)
-  //   }
-  //   const validMove = validMoves.includes(itemReplacedId)
-
-  //   if (validMove) {
-  //     colorArr[itemReplacedId] = draggedItem.getAttribute('src')
-  //     colorArr[itemDraggedId] = replacedItem.getAttribute('src')
-
-  //     const isARowOfFour = checkforRowFour()
-  //     const isAColOfFour = checkforColFour()
-  //     const isARowOfThree = checkforRowThree()
-  //     const isAColOfThree = checkforColThree()
-
-  //     if (itemReplacedId && (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree)) {
-  //       setDraggedItem(null)
-  //       setReplacedItem(null)
-  //     } else {
-  //       colorArr[itemReplacedId] = replacedItem.getAttribute('src')
-  //       colorArr[itemDraggedId] = draggedItem.getAttribute('src')
-  //       setColorArr([...colorArr])
-  //     }
-  //   }
-  // }
-
   function createBoard () {
     const newArr = new Array(width).fill(0).map(() => new Array(width).fill(0))
     for (let i = 0; i < width; i++) {
@@ -146,7 +98,6 @@ export default function Board () {
         newArr[i][j] = candyColors[Math.floor(Math.random() * candyColors.length)]
       }
     }
-    console.log(newArr)
     setColorArr(newArr)
   }
 
@@ -167,29 +118,8 @@ export default function Board () {
   }, [colorArr])
 
   return (
-
     <div className='grid-container'>
-      {console.log(colorArr)}
-      {colorArr.forEach((rows, x) => {
-        // console.log(`row ${x}: `, rows)
-        rows.map((candy, y) => {
-          // console.log(candy)
-          return <div className={`grid-item-${x}-${y}`} key={`${x}-${y}`}>
-            <img
-              src={candy}
-              alt={candy}
-              data-id={`${x}-${y}`}
-              draggable='true'
-              // onDragOver={(e) => e.preventDefault()}
-              // onDragEnter={(e) => e.preventDefault()}
-              // onDragLeave={(e) => e.preventDefault()}
-            // onDrop={ handleOnDrop }
-            // onDragStart={ handleOnDragStart }
-            // onDragEnd={ handleOnDragEnd }
-            />
-          </div>
-        })
-      })}
+      <Items colorArr={colorArr} />
     </div>
   )
 }
