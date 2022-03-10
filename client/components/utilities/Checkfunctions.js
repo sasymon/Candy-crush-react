@@ -1,4 +1,4 @@
-import { width } from '../Board'
+// import { width } from '../Board'
 
 export function checkforColFour () {
   // function checkforColFour () {

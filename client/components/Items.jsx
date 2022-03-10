@@ -1,4 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
+
+import { width } from './Board'
 
 export default function Items (props) {
   const candyArr = props.colorArr

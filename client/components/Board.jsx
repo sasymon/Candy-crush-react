@@ -1,4 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { setBoard } from '../actions'
 
 import Items from './Items'
 
@@ -13,67 +16,10 @@ import blank from './images/blank.png'
 export const width = 8
 
 export default function Board () {
-  const [colorArr, setColorArr] = useState([])
+  const colorArr = useSelector(state => state.board)
+  const dispatch = useDispatch()
 
   const candyColors = [blueCandy, redCandy, greenCandy, yellowCandy, orangeCandy, purpleCandy]
-
-  // function checkforColFour () {
-  //   for (let i = 0; i < (width * (width - 3)); i++) {
-  //     const colOfFour = [i, i + width, i + (width * 2), i + (width * 3)]
-  //     const colorCheck = colorArr[i]
-
-  //     if (colOfFour.every(item => colorArr[item] === colorCheck)) {
-  //       (colOfFour.forEach(item => colorArr[item] = blank))
-  //       return true
-  //     }
-  //   }
-  // }
-
-  // function checkforColThree () {
-  //   for (let i = 0; i < (width * (width - 2)); i++) {
-  //     const colOfThree = [i, i + width, i + (width * 2)]
-  //     const colorCheck = colorArr[i]
-
-  //     if (colOfThree.every(item => colorArr[item] === colorCheck)) {
-  //       (colOfThree.forEach(item => colorArr[item] = blank))
-  //       return true
-  //     }
-  //   }
-  // }
-
-  // function checkforRowFour () {
-  //   for (let i = 0; i < (width * width); i++) {
-  //     const rowOfFOur = [i, i + 1, i + 2, i + 3]
-  //     const colorCheck = colorArr[i]
-  //     const skipCheckFour = []
-  //     if ((i + 1) % width === 0 || (i + 2) % width === 0 || (i + 3) % width === 0) {
-  //       skipCheckFour.push(i)
-  //     }
-  //     if (skipCheckFour.includes(i) === false) {
-  //       if (rowOfFOur.every(item => colorArr[item] === colorCheck)) {
-  //         (rowOfFOur.forEach(item => colorArr[item] = blank))
-  //         return true
-  //       }
-  //     }
-  //   }
-  // }
-
-  // function checkforRowThree () {
-  //   for (let i = 0; i < (width * width); i++) {
-  //     const rowOfThree = [i, i + 1, i + 2]
-  //     const colorCheck = colorArr[i]
-  //     const skipCheck = []
-  //     if ((i + 1) % width === 0 || (i + 2) % width === 0) {
-  //       skipCheck.push(i)
-  //     }
-  //     if (skipCheck.includes(i) === false) {
-  //       if (rowOfThree.every(item => colorArr[item] === colorCheck)) {
-  //         (rowOfThree.forEach(item => colorArr[item] = blank))
-  //         return true
-  //       }
-  //     }
-  //   }
-  // }
 
   // function newItemsToEmptySpace () {
   //   for (let i = 0; i < width * (width - 1); i++) {
@@ -98,11 +44,11 @@ export default function Board () {
         newArr[i][j] = candyColors[Math.floor(Math.random() * candyColors.length)]
       }
     }
-    setColorArr(newArr)
+    return newArr
   }
 
   useEffect(() => {
-    createBoard()
+    dispatch(setBoard(createBoard()))
   }, [])
 
   useEffect(() => {
@@ -111,8 +57,7 @@ export default function Board () {
       // checkforColFour()
       // checkforRowThree()
       // checkforColThree()
-      // newItemsToEmptySpace()
-      setColorArr([...colorArr])
+      // newItemsToEmptySpace())
     }, 1000)
     return () => clearInterval(timer)
   }, [colorArr])
