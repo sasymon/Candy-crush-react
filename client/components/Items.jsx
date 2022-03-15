@@ -36,13 +36,13 @@ export default function Items () {
     // Row 0
     if (itemDraggedId[0] === 0) {
       // Col 0
-      if (itemDraggedId[1] === width - 1) {
+      if (itemDraggedId[1] === 0) {
         validMoves.push(
           [itemDraggedId[0], itemDraggedId[1] + 1],
           [itemDraggedId[0] + 1, itemDraggedId[1]]
         )
         // Col 7
-      } else if (itemDraggedId[1] === 0) {
+      } else if (itemDraggedId[1] === width - 1) {
         validMoves.push(
           [itemDraggedId[0], itemDraggedId[1] - 1],
           [itemDraggedId[0] + 1, itemDraggedId[1]]
@@ -57,13 +57,13 @@ export default function Items () {
     // Row 7
     } else if (itemDraggedId[0] === width - 1) {
       // Col 0
-      if (itemDraggedId[1] === width - 1) {
+      if (itemDraggedId[1] === 0) {
         validMoves.push(
           [itemDraggedId[0], itemDraggedId[1] + 1],
           [itemDraggedId[0] - 1, itemDraggedId[1]]
         )
         // Col 7
-      } else if (itemDraggedId[1] === 0) {
+      } else if (itemDraggedId[1] === width - 1) {
         validMoves.push(
           [itemDraggedId[0], itemDraggedId[1] - 1],
           [itemDraggedId[0] - 1, itemDraggedId[1]]
@@ -103,21 +103,11 @@ export default function Items () {
       }
     }
 
-    console.log('legal', validMoves)
-    // const validMoves = [
-    // [itemDraggedId[0] - 1, itemDraggedId[1]],
-    // [itemDraggedId[0] + 1, itemDraggedId[1]]
-    // ]
+    const validMove = validMoves.some(item => item[0] === itemReplacedId[0] && item[1] === itemReplacedId[1])
 
-    // const potentialValidMoves = [
-    //   [itemDraggedId[0], itemDraggedId[1] - 1],
-    //   [itemDraggedId[0] + 1]
-    // ]
-    // console.log('maybe', validMoves)
-    // if (itemDraggedId + 1 % width !== 0 && itemDraggedId % width !== 0) {
-    //   validMoves.push(...potentialValidMoves)
-    // }
-    // const validMove = validMoves.includes(itemReplacedId)
+    console.log('replaced', itemReplacedId)
+    console.log('legal', validMoves)
+    console.log('can move', validMove)
 
     // if (validMove) {
     //   colorArr[itemReplacedId] = draggedItem.getAttribute('src')
