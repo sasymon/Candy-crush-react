@@ -105,18 +105,16 @@ export default function Items () {
 
     const validMove = validMoves.some(item => item[0] === itemReplacedId[0] && item[1] === itemReplacedId[1])
 
-    console.log('replaced', itemReplacedId)
-    console.log('legal', validMoves)
-    console.log('can move', validMove)
+    if (validMove) {
+      colorArr[itemReplacedId] = draggedItem.getAttribute('src')
+      colorArr[itemDraggedId] = replacedItem.getAttribute('src')
 
-    // if (validMove) {
-    //   colorArr[itemReplacedId] = draggedItem.getAttribute('src')
-    //   colorArr[itemDraggedId] = replacedItem.getAttribute('src')
-
-    //   const isARowOfFour = checkforRowFour(colorArr)
-    //   const isAColOfFour = checkforColFour(colorArr)
-    //   const isARowOfThree = checkforRowThree(colorArr)
-    //   const isAColOfThree = checkforColThree(colorArr)
+      console.log(colorArr[itemReplacedId] = draggedItem.getAttribute('src'))
+      console.log(colorArr[itemDraggedId] = replacedItem.getAttribute('src'))
+      //   const isARowOfFour = checkforRowFour(colorArr)
+      //   const isAColOfFour = checkforColFour(colorArr)
+      //   const isARowOfThree = checkforRowThree(colorArr)
+      //   const isAColOfThree = checkforColThree(colorArr)
 
     //   if (itemReplacedId && (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree)) {
     //     setDraggedItem(null)
@@ -128,6 +126,7 @@ export default function Items () {
     //     setColorArr([...colorArr])
     //   }
     // }
+    }
   }
 
   return (
