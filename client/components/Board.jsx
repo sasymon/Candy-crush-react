@@ -11,15 +11,16 @@ import orangeCandy from './images/orange-candy.png'
 import redCandy from './images/red-candy.png'
 import yellowCandy from './images/yellow-candy.png'
 import purpleCandy from './images/purple-candy.png'
-import blank from './images/blank.png'
+// import blank from './images/blank.png'
 
 export const width = 8
+export const candyColors = [blueCandy, redCandy, greenCandy, yellowCandy, orangeCandy, purpleCandy]
+
+// NEXT TODO: setup helper item drag/drop functionality
 
 export default function Board () {
   const colorArr = useSelector(state => state.board)
   const dispatch = useDispatch()
-
-  const candyColors = [blueCandy, redCandy, greenCandy, yellowCandy, orangeCandy, purpleCandy]
 
   // function newItemsToEmptySpace () {
   //   for (let i = 0; i < width * (width - 1); i++) {
@@ -64,7 +65,7 @@ export default function Board () {
 
   return (
     <div className='grid-container'>
-      <Items colorArr={colorArr} />
+      <Items />
     </div>
   )
 }
