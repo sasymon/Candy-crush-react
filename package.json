@@ -43,7 +43,10 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "kill-port": "^1.6.1",
-    "lts": "^1.2.0"
+    "lts": "^1.2.0",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-thunk": "^2.4.1"
   },
   "devDependencies": {
     "@babel/core": "7.13.1",
