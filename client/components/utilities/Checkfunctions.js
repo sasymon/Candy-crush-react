@@ -5,18 +5,19 @@ export function checkforColFour (colorArr) {
   for (let i = 0; i < width - 3; i++) {
     for (let j = 0; j < width; j++) {
       const colOfFour = {
-        [`${i}, ` + `${j}`]: colorArr[i][j],
-        [`${i + 1}, ` + `${j}`]:colorArr[i + 1][j],
-        [`${i + 2}, ` + `${j}`]:colorArr[i + 2][j],
-        [`${i + 3}, ` + `${j}`]:colorArr[i + 3][j]
+        [`${i}, ${j}`]: colorArr[i][j],
+        [`${i + 1}, ${j}`]: colorArr[i + 1][j],
+        [`${i + 2}, ${j}`]: colorArr[i + 2][j],
+        [`${i + 3}, ${j}`]: colorArr[i + 3][j]
       }
       const colorCheck = colorArr[i][j]
 
       if (Object.values(colOfFour).every(item => item === colorCheck)) {
         console.log(Object.keys(colOfFour))
         Object.keys(colOfFour).forEach(item => {
+        const coords = item.split(',').map(Number)
+        colorArr[coords[0]][coords[1]] = blank
         })
-        console.log(colorArr)
         return true
       }
     }
