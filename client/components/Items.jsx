@@ -15,7 +15,6 @@ export default function Items () {
   useEffect(() => {
     setColorArr(candyArr)
   }, [])
-
   function handleOnDragStart (e) {
     setDraggedItem(e.target)
   }
@@ -24,7 +23,7 @@ export default function Items () {
     setReplacedItem(e.target)
   }
 
-  function handleOnDragEnd (e) {
+  function handleOnDragEnd (e, copyArr) {
     e.preventDefault()
 
     const itemDraggedId = draggedItem.getAttribute('id').split(',').map(Number)
@@ -104,17 +103,16 @@ export default function Items () {
     }
 
     const validMove = validMoves.some(item => item[0] === itemReplacedId[0] && item[1] === itemReplacedId[1])
-
     if (validMove) {
-      colorArr[itemReplacedId] = draggedItem.getAttribute('src')
-      colorArr[itemDraggedId] = replacedItem.getAttribute('src')
+      copyArr[itemReplacedId[0]][itemReplacedId[1]] = draggedItem.getAttribute('src')
+      copyArr[itemDraggedId[0]][itemDraggedId[1]] = replacedItem.getAttribute('src')
 
-      console.log(colorArr[itemReplacedId] = draggedItem.getAttribute('src'))
-      console.log(colorArr[itemDraggedId] = replacedItem.getAttribute('src'))
-      //   const isARowOfFour = checkforRowFour(colorArr)
-      //   const isAColOfFour = checkforColFour(colorArr)
-      //   const isARowOfThree = checkforRowThree(colorArr)
-      //   const isAColOfThree = checkforColThree(colorArr)
+      const isAColOfFour = checkforColFour(copyArr)
+      // const isARowOfFour = checkforRowFour(colorArr)
+      // const isARowOfThree = checkforRowThree(colorArr)
+      // const isAColOfThree = checkforColThree(colorArr)
+
+      // console.log(isAColOfFour)
 
     //   if (itemReplacedId && (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree)) {
     //     setDraggedItem(null)
@@ -144,7 +142,7 @@ export default function Items () {
             onDragLeave={(e) => e.preventDefault()}
             onDrop={ handleOnDrop }
             onDragStart={ handleOnDragStart }
-            onDragEnd={ handleOnDragEnd }
+            onDragEnd={(e) => handleOnDragEnd(e, candyArr) }
           />
         })
       })}

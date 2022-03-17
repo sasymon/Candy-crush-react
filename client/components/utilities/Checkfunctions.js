@@ -2,13 +2,23 @@ import { width, candyColors } from '../Board'
 import blank from '../images/blank.png'
 
 export function checkforColFour (colorArr) {
-  for (let i = 0; i < (width * (width - 3)); i++) {
-    const colOfFour = [i, i + width, i + (width * 2), i + (width * 3)]
-    const colorCheck = colorArr[i]
+  for (let i = 0; i < width - 3; i++) {
+    for (let j = 0; j < width; j++) {
+      const colOfFour = {
+        [`${i}, ` + `${j}`]: colorArr[i][j],
+        [`${i + 1}, ` + `${j}`]:colorArr[i + 1][j],
+        [`${i + 2}, ` + `${j}`]:colorArr[i + 2][j],
+        [`${i + 3}, ` + `${j}`]:colorArr[i + 3][j]
+      }
+      const colorCheck = colorArr[i][j]
 
-    if (colOfFour.every(item => colorArr[item] === colorCheck)) {
-      (colOfFour.forEach(item => colorArr[item] = blank))
-      return true
+      if (Object.values(colOfFour).every(item => item === colorCheck)) {
+        console.log(Object.keys(colOfFour))
+        Object.keys(colOfFour).forEach(item => {
+        })
+        console.log(colorArr)
+        return true
+      }
     }
   }
 }
