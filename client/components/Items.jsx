@@ -108,11 +108,11 @@ export default function Items () {
       copyArr[itemDraggedId[0]][itemDraggedId[1]] = replacedItem.getAttribute('src')
 
       const isAColOfFour = checkforColFour(copyArr)
-      // const isARowOfFour = checkforRowFour(colorArr)
-      // const isARowOfThree = checkforRowThree(colorArr)
-      // const isAColOfThree = checkforColThree(colorArr)
+      const isAColOfThree = checkforColThree(copyArr)
+      const isARowOfFour = checkforRowFour(copyArr)
+      const isARowOfThree = checkforRowThree(copyArr)
 
-      // console.log(isAColOfFour)
+      console.log(isAColOfFour)
 
     //   if (itemReplacedId && (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree)) {
     //     setDraggedItem(null)
