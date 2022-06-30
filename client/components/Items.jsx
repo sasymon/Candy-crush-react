@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { width, candyColors } from './Board'
-import { checkforColFour, checkforColThree, checkforRowFour, checkforRowThree } from './utilities/Checkfunctions'
+import { checkforColFour, checkforColThree, checkforRowFour, checkforRowThree, checkMovedCandy } from './utilities/Checkfunctions'
 import { setBoard } from '../actions'
 
 export default function Items () {
@@ -24,7 +24,8 @@ export default function Items () {
     setReplacedItem(e.target)
   }
 
-  function handleOnDragEnd (e) {
+  function handleOnDragEnd (e, copyArr) {
+    const workingArr = JSON.parse(JSON.stringify(copyArr))
     e.preventDefault()
 
     const itemDraggedId = draggedItem.getAttribute('id').split(',').map(Number)
@@ -68,7 +69,7 @@ export default function Items () {
           [itemDraggedId[0], itemDraggedId[1] - 1],
           [itemDraggedId[0] - 1, itemDraggedId[1]]
         )
-      // Col everything else
+        // Col everything else
       } else {
         validMoves.push(
           [itemDraggedId[0], itemDraggedId[1] - 1],
@@ -76,7 +77,7 @@ export default function Items () {
           [itemDraggedId[0] - 1, itemDraggedId[1]]
         )
       }
-    // Row everything else
+      // Row everything else
     } else {
       // Col 0
       if (itemDraggedId[1] === 0) {
@@ -104,28 +105,29 @@ export default function Items () {
     }
 
     const validMove = validMoves.some(item => item[0] === itemReplacedId[0] && item[1] === itemReplacedId[1])
-
     if (validMove) {
-      colorArr[itemReplacedId] = draggedItem.getAttribute('src')
-      colorArr[itemDraggedId] = replacedItem.getAttribute('src')
+      workingArr[itemReplacedId[0]][itemReplacedId[1]] = draggedItem.getAttribute('src')
+      workingArr[itemDraggedId[0]][itemDraggedId[1]] = replacedItem.getAttribute('src')
 
-      console.log(colorArr[itemReplacedId] = draggedItem.getAttribute('src'))
-      console.log(colorArr[itemDraggedId] = replacedItem.getAttribute('src'))
-      //   const isARowOfFour = checkforRowFour(colorArr)
-      //   const isAColOfFour = checkforColFour(colorArr)
-      //   const isARowOfThree = checkforRowThree(colorArr)
-      //   const isAColOfThree = checkforColThree(colorArr)
+      // TODO: Check changed candies only
 
-    //   if (itemReplacedId && (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree)) {
-    //     setDraggedItem(null)
-    //     setReplacedItem(null)
-    //   } else {
-    //     colorArr[itemReplacedId] = replacedItem.getAttribute('src')
-    //     colorArr[itemDraggedId] = draggedItem.getAttribute('src')
-    //     console.log('CA2: ', colorArr)
-    //     setColorArr([...colorArr])
-    //   }
-    // }
+      // const checkLocal = checkMovedCandy(workingArr, itemDraggedId, itemReplacedId)
+
+      const isAColOfFour = checkforColFour(workingArr)
+      const isAColOfThree = checkforColThree(workingArr)
+      const isARowOfFour = checkforRowFour(workingArr)
+      const isARowOfThree = checkforRowThree(workingArr)
+
+      if (itemReplacedId && (isARowOfFour[0] || isAColOfFour[0] || isARowOfThree[0] || isAColOfThree[0])) {
+        setDraggedItem(null)
+        setReplacedItem(null)
+        dispatch()
+      } else {
+        workingArr[itemReplacedId] = replacedItem.getAttribute('src')
+        workingArr[itemDraggedId] = draggedItem.getAttribute('src')
+        // console.log('CA2: ', colorArr)
+        // setColorArr([...colorArr])
+      }
     }
   }
 
@@ -144,7 +146,7 @@ export default function Items () {
             onDragLeave={(e) => e.preventDefault()}
             onDrop={ handleOnDrop }
             onDragStart={ handleOnDragStart }
-            onDragEnd={ handleOnDragEnd }
+            onDragEnd={(e) => handleOnDragEnd(e, candyArr) }
           />
         })
       })}
