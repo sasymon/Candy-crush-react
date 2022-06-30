@@ -16,8 +16,6 @@ export default function Items () {
     setColorArr(candyArr)
   }, [])
 
-
-
   function handleOnDragStart (e) {
     setDraggedItem(e.target)
   }
