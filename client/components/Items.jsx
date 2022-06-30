@@ -1,21 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
 
 import { width, candyColors } from './Board'
 import { checkforColFour, checkforColThree, checkforRowFour, checkforRowThree, checkMovedCandy } from './utilities/Checkfunctions'
-import { setBoard } from '../actions'
 
-export default function Items () {
-  const dispatch = useDispatch()
-  const candyArr = useSelector(state => state.board)
-  const [colorArr, setColorArr] = useState([])
-  const [draggedItem, setDraggedItem] = useState(null)
-  const [replacedItem, setReplacedItem] = useState(null)
-
-  useEffect(() => {
-    setColorArr(candyArr)
-  }, [])
-
+export default function Items (props) {
   function handleOnDragStart (e) {
     setDraggedItem(e.target)
   }
@@ -121,7 +109,6 @@ export default function Items () {
       if (itemReplacedId && (isARowOfFour[0] || isAColOfFour[0] || isARowOfThree[0] || isAColOfThree[0])) {
         setDraggedItem(null)
         setReplacedItem(null)
-        dispatch()
       } else {
         workingArr[itemReplacedId] = replacedItem.getAttribute('src')
         workingArr[itemDraggedId] = draggedItem.getAttribute('src')
