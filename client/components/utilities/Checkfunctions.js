@@ -48,7 +48,7 @@ export function checkforColFour (colorArr) {
       }
       const colorCheck = colorArr[i][j]
       if (Object.values(colOfFour).every(item => item === colorCheck))
-      return [true, replaceWithBlank(Object.keys(colOfFour), colorArr)]
+        return [true, replaceWithBlank(Object.keys(colOfFour), colorArr)]
       }
     }
   }
@@ -79,7 +79,7 @@ export function checkforRowFour (colorArr) {
       }
       const colorCheck = colorArr[i][j]
       if (Object.values(rowOfFour).every(item => item === colorCheck))
-      return [true, replaceWithBlank(Object.keys(rowOfFour), colorArr)]
+        return [true, replaceWithBlank(Object.keys(rowOfFour), colorArr)]
     }
   }
 }
@@ -94,7 +94,7 @@ export function checkforRowThree (colorArr) {
       }
       const colorCheck = colorArr[i][j]
       if (Object.values(rowOfThree).every(item => item === colorCheck))
-      return [true, replaceWithBlank(Object.keys(rowOfThree), colorArr)]
+        return [true, replaceWithBlank(Object.keys(rowOfThree), colorArr)]
     }
   }
 }

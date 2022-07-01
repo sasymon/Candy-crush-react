@@ -108,12 +108,10 @@ export default function Board () {
         )
       }
     }
-
     const validMove = validMoves.some(item => item[0] === itemReplacedId[0] && item[1] === itemReplacedId[1])
     if (validMove) {
       workingArr[itemReplacedId[0]][itemReplacedId[1]] = draggedItem.getAttribute('src')
       workingArr[itemDraggedId[0]][itemDraggedId[1]] = replacedItem.getAttribute('src')
-
       // TODO: Check changed candies only
 
       // const checkLocal = checkMovedCandy(workingArr, itemDraggedId, itemReplacedId)
@@ -122,13 +120,14 @@ export default function Board () {
       const isAColOfThree = checkforColThree(workingArr)
       const isARowOfFour = checkforRowFour(workingArr)
       const isARowOfThree = checkforRowThree(workingArr)
+      console.log(isAColOfFour, isAColOfThree, isARowOfFour, isARowOfThree)
 
-      if (itemReplacedId && (isARowOfFour[0] || isAColOfFour[0] || isARowOfThree[0] || isAColOfThree[0])) {
+      if (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree) {
         setDraggedItem(null)
         setReplacedItem(null)
       } else {
-        workingArr[itemReplacedId] = replacedItem.getAttribute('src')
-        workingArr[itemDraggedId] = draggedItem.getAttribute('src')
+        // workingArr[itemReplacedId] = replacedItem.getAttribute('src')
+        // workingArr[itemDraggedId] = draggedItem.getAttribute('src')
         // console.log('CA2: ', colorArr)
         // setColorArr([...colorArr])
       }
@@ -157,7 +156,7 @@ export default function Board () {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      // setBoardAray([...boardArray])
+      // setCandyArr([...candyArr])
       // checkforRowFour()
       // checkforColFour()
       // checkforRowThree()
