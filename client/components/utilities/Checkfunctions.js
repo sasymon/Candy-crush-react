@@ -24,17 +24,46 @@ export function replaceWithBlank (matchedCoords, colorArr) {
 //   }
 // }
 
+function getCol(colorArr, index) {
+  const col = []
+  for (let i = 0; i < width; i++) {
+    col.push(colorArr[i][index[1]])
+  }
+  return col
+}
+
+function checkLines (array, item) {
+  let lines = []
+  console.log(item)
+  for (let i = 0; i < array.length; i++) {
+    if (array[i] === item) {
+      lines.push(i)
+    } else {
+      if (lines.length < 3 === true) {
+        console.log('ll', lines.length)
+        lines = []
+      }
+    }
+  }
+  return lines
+}
+
 export function checkAll (colorArr) {
   // TODO: Run all checks on entire array
 }
 
 export function checkMovedCandy (colorArr, dragged, replaced) {
-  const lines = {}
-  const setsOfThree = ''
-  for (let i = 0; i < width; i++) {
-
-  }
-
+  const draggedRow = colorArr[dragged[0]]
+  const draggedCol = getCol(colorArr, dragged)
+  const replacedRow = colorArr[replaced[0]]
+  const replacedCol = getCol(colorArr, replaced)
+  console.log('replaced', colorArr[replaced[0]][replaced[1]])
+  
+  console.log('DR: ', checkLines(draggedRow, colorArr[dragged[0]][dragged[1]]))
+  console.log('DC: ', checkLines(draggedCol, colorArr[dragged[0]][dragged[1]]))
+  console.log('RR: ', checkLines(replacedRow, colorArr[replaced[0]][replaced[1]]))
+  console.log('RC: ', checkLines(replacedCol, colorArr[replaced[0]][replaced[1]]))
+  
 }
 
 export function checkforColFour (colorArr) {
