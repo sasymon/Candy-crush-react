@@ -19,3 +19,9 @@
   width: 80px;
   height: auto;
 }
+
+.grid-item:hover {
+  transform: rotate(5deg) scale(1.1);
+  cursor: grab;
+  transition: all .14s ease;
+}
