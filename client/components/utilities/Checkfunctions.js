@@ -32,20 +32,60 @@ function getCol(colorArr, index) {
   return col
 }
 
-function checkLines (array, item) {
-  let lines = []
-  console.log(item)
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === item) {
-      lines.push(i)
-    } else {
-      if (lines.length < 3 === true) {
-        console.log('ll', lines.length)
-        lines = []
+// Returns an array of matched coords to explode
+export function checkMatchRows (array, match) {
+  var results = [[match.x,match.y]];
+  // look right
+  
+  for(let i = match.x+1; i < array[match.y].length; i++) {
+    console.log(i);
+      if(array[match.y][i] == match.color) {
+        results.push([i,match.y]);
+      }   
+      else {
+        break;
       }
-    }
   }
-  return lines
+  // look left
+  for(let i = match.x-1; i >=0; i--) {
+    
+    if(array[match.y][i] == match.color) {
+      results.push([i,match.y]);
+    } 
+    else {
+      break;
+    }
+  }  
+   
+  return results;
+}
+
+
+// Returns an array of matched coords to explode
+export function checkMatchColumns (array, match) {
+  var results = [[match.x,match.y]];
+  // look down
+  for(let i = match.y+1; i < array.length; i++) {
+     
+      if(array[i][match.x] == match.color) {
+        results.push([match.x,i]);
+      }   
+      else {
+        break;
+      }
+  }
+  // look up
+  for(let i = match.y-1; i >=0; i--) {
+   
+    if(array[i][match.x] == match.color) {
+      results.push([match.x,i]);
+    } 
+    else {
+      break;
+    }
+  }  
+   
+  return results;
 }
 
 export function checkAll (colorArr) {

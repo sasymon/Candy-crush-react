@@ -31,7 +31,14 @@
       "@babel/plugin-proposal-class-properties",
       "@babel/plugin-proposal-object-rest-spread",
       "@babel/plugin-transform-runtime"
-    ]
+    ],
+    "env": {
+      "test": {
+        "plugins": [
+          "@babel/plugin-transform-modules-commonjs"
+        ]
+      }
+    }
   },
   "eslintConfig": {
     "extends": "eda",
@@ -42,6 +49,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jest-util": "^29.3.1",
     "kill-port": "^1.6.1",
     "lts": "^1.2.0",
     "react-redux": "^7.2.6",
@@ -52,22 +60,35 @@
     "@babel/core": "7.13.1",
     "@babel/plugin-proposal-class-properties": "7.13.0",
     "@babel/plugin-proposal-object-rest-spread": "7.13.0",
+    "@babel/plugin-transform-modules-commonjs": "^7.20.11",
     "@babel/plugin-transform-runtime": "7.13.1",
-    "@babel/preset-env": "7.13.0",
-    "@babel/preset-react": "7.12.13",
-    "@testing-library/react": "11.2.5",
+    "@babel/preset-env": "^7.13.0",
+    "@babel/preset-react": "^7.12.13",
+    "@testing-library/react": "^11.2.7",
+    "babel-jest": "^29.3.1",
     "babel-loader": "^8.2.2",
     "eslint": "7.9.0",
     "eslint-config-eda": "0.1.4",
     "file-loader": "^6.2.0",
     "jest": "^26.6.3",
+    "jest-cli": "^29.3.1",
+    "jest-environment-jsdom": "^29.3.1",
     "nodemon": "^2.0.7",
     "npm-run-all": "^4.1.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "react-test-renderer": "^18.2.0",
     "superagent": "6.1.0",
     "webpack": "^5.24.0",
     "webpack-cli": "4.5.0",
     "webpack-dev-server": "^3.11.2"
-  }
+  },
+  "transform": {
+    "\\.js$": "<rootDir>/node_modules/babel-jest",
+    "\\.jsx$": "<rootDir>/node_modules/babel-jest"
+  },
+  "moduleFileExtensions": [
+    "js",
+    "jsx"
+  ]
 }
