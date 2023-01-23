@@ -2,8 +2,6 @@ import { width, candyColors } from '../Board'
 import blank from '../images/blank.png'
 
 
-// TODO: Combine check functions into one function
-
 export function replaceWithBlank (matchedCoords, colorArr) {
   matchedCoords.forEach(item => {
     const coords = item.split(',').map(Number)
@@ -18,11 +16,6 @@ export function replaceWithBlank (matchedCoords, colorArr) {
 //   colorArr[coords[0]][coords[1]] = blank
 // })
 
-// function finalCheck(colorCheck, checkArray) {
-//   if (Object.values(checkArray).every(item => item === colorCheck)) {
-//     return true
-//   }
-// }
 
 function getCol(colorArr, index) {
   const col = []
@@ -30,22 +23,6 @@ function getCol(colorArr, index) {
     col.push(colorArr[i][index[1]])
   }
   return col
-}
-
-function checkLines (array, item) {
-  let lines = []
-  console.log(item)
-  for (let i = 0; i < array.length; i++) {
-    if (array[i] === item) {
-      lines.push(i)
-    } else {
-      if (lines.length < 3 === true) {
-        console.log('ll', lines.length)
-        lines = []
-      }
-    }
-  }
-  return lines
 }
 
 export function checkAll (colorArr) {
@@ -57,75 +34,92 @@ export function checkMovedCandy (colorArr, dragged, replaced) {
   const draggedCol = getCol(colorArr, dragged)
   const replacedRow = colorArr[replaced[0]]
   const replacedCol = getCol(colorArr, replaced)
-  console.log('replaced', colorArr[replaced[0]][replaced[1]])
+  // console.log('arguments', dragged, replaced)
   
-  console.log('DR: ', checkLines(draggedRow, colorArr[dragged[0]][dragged[1]]))
-  console.log('DC: ', checkLines(draggedCol, colorArr[dragged[0]][dragged[1]]))
-  console.log('RR: ', checkLines(replacedRow, colorArr[replaced[0]][replaced[1]]))
-  console.log('RC: ', checkLines(replacedCol, colorArr[replaced[0]][replaced[1]]))
-  
+  console.log('DR: ', checkLines(draggedRow, colorArr[dragged[0]][dragged[1]], dragged))
+  console.log('DC: ', checkLines(draggedCol, colorArr[dragged[0]][dragged[1]], dragged))
+  console.log('RR: ', checkLines(replacedRow, colorArr[replaced[0]][replaced[1]], replaced))
+  console.log('RC: ', checkLines(replacedCol, colorArr[replaced[0]][replaced[1]], replaced))
 }
 
-export function checkforColFour (colorArr) {
-  for (let i = 0; i < width - 3; i++) {
-    for (let j = 0; j < width; j++) {
-      const colOfFour = {
-        [`${i}, ${j}`]: colorArr[i][j],
-        [`${i + 1}, ${j}`]: colorArr[i + 1][j],
-        [`${i + 2}, ${j}`]: colorArr[i + 2][j],
-        [`${i + 3}, ${j}`]: colorArr[i + 3][j]
-      }
-      const colorCheck = colorArr[i][j]
-      if (Object.values(colOfFour).every(item => item === colorCheck))
-        return [true, replaceWithBlank(Object.keys(colOfFour), colorArr)]
-      }
-    }
-  }
-
-export function checkforColThree (colorArr) {
-  for (let i = 0; i < width - 2; i++) {
-    for (let j = 0; j < width; j++) {
-      const colOfThree = {
-        [`${i}, ${j}`]: colorArr[i][j],
-        [`${i + 1}, ${j}`]: colorArr[i + 1][j],
-        [`${i + 2}, ${j}`]: colorArr[i + 2][j]
-      }
-    const colorCheck = colorArr[i][j]
-    if (Object.values(colOfThree).every(item => item === colorCheck))
-      return [true, replaceWithBlank(Object.keys(colOfThree), colorArr)]
-    }
+function checkLines (line, color) {
+  if( checkForSeven(line, color) == true) {
+    return 7
+  } else if (checkForSix(line, color) == true) {
+    return 6
+  } else if (checkForFive(line, color) == true) {
+    return 5
+  } else if (checkForFour(line, color) == true) {
+    return 4
+  } else if (checkForThree(line, color) == true) {
+    return
+  } else {
+    return [false]
   }
 }
 
-export function checkforRowFour (colorArr) {
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < width - 3; j++) {
-      const rowOfFour = {
-        [`${i}, ${j}`]: colorArr[i][j],
-        [`${i}, ${j + 1}`]: colorArr[i][j + 1],
-        [`${i}, ${j + 2}`]: colorArr[i][j + 2],
-        [`${i}, ${j + 3}`]: colorArr[i][j + 3]
-      }
-      const colorCheck = colorArr[i][j]
-      if (Object.values(rowOfFour).every(item => item === colorCheck))
-        return [true, replaceWithBlank(Object.keys(rowOfFour), colorArr)]
-    }
+function checkForThree (line, color, coords) {
+ for (let i = 0; i < line.length - 3; i++) {
+  const checkLine = {
+    [`${i}`]: line[i],
+    [`${i + 1}`]: line[i + 1],
+    [`${i + 2}`]: line[i + 2],
   }
+  if (Object.values(checkLine).every(item => item === color)) {
+    return true
+  }
+ }
 }
 
-export function checkforRowThree (colorArr) {
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < width - 2; j++) {
-      const rowOfThree = {
-        [`${i}, ${j}`]: colorArr[i][j],
-        [`${i}, ${j + 1}`]: colorArr[i][j + 1],
-        [`${i}, ${j + 2}`]: colorArr[i][j + 2]
-      }
-      const colorCheck = colorArr[i][j]
-      if (Object.values(rowOfThree).every(item => item === colorCheck))
-        return [true, replaceWithBlank(Object.keys(rowOfThree), colorArr)]
+export function checkForFour (line, color) {
+  for (let i = 0; i < line.length - 4; i++) {
+    const checkLine = {
+      [`${i}`]: line[i],
+      [`${i + 1}`]: line[i + 1],
+      [`${i + 2}`]: line[i + 2],
+      [`${i + 1}`]: line[i + 3]
     }
+    if (Object.values(checkLine).every(item => item === color)) {
+      return true
+    }
+   }
   }
+
+export function checkForFive (line, color) {
+  for (let i = 0; i < line.length - 5; i++) {
+    const checkLine = {
+      [`${i}`]: line[i],
+      [`${i + 1}`]: line[i + 1],
+      [`${i + 2}`]: line[i + 2],
+      [`${i + 3}`]: line[i + 3],
+      [`${i + 4}`]: line[i + 4]
+    }
+    if (Object.values(checkLine).every(item => item === color)) {
+      return true
+    }
+   }
+}
+
+export function checkForSix (line, color) {
+  for (let i = 0; i < line.length - 6; i++) {
+    const checkLine = {
+      [`${i}`]: line[i],
+      [`${i + 1}`]: line[i + 1],
+      [`${i + 2}`]: line[i + 2],
+      [`${i + 3}`]: line[i + 3],
+      [`${i + 4}`]: line[i + 4],
+      [`${i + 5}`]: line[i + 5]
+    }
+    if (Object.values(checkLine).every(item => item === color)) {
+      return true
+    }
+   }
+}
+
+export function checkForSeven (line, color) {
+   if (Object.values(line).every(item => item === color)) {
+    return true
+    }
 }
 
 // export function newItemsToEmptySpace (colorArr) {

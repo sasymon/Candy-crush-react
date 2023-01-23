@@ -108,7 +108,6 @@ export default function Board () {
         )
       }
     }
-
     console.log(checkMovedCandy(workingArr, itemDraggedId, itemReplacedId))
     const validMove = validMoves.some(item => item[0] === itemReplacedId[0] && item[1] === itemReplacedId[1])
     if (validMove) {
@@ -118,21 +117,21 @@ export default function Board () {
 
       // const checkLocal = checkMovedCandy(workingArr, itemDraggedId, itemReplacedId)
 
-      const isAColOfFour = checkforColFour(workingArr)
-      const isAColOfThree = checkforColThree(workingArr)
-      const isARowOfFour = checkforRowFour(workingArr)
-      const isARowOfThree = checkforRowThree(workingArr)
+      // const isAColOfFour = checkforColFour(workingArr)
+      // const isAColOfThree = checkforColThree(workingArr)
+      // const isARowOfFour = checkforRowFour(workingArr)
+      // const isARowOfThree = checkforRowThree(workingArr)
       // console.log(isAColOfFour, isAColOfThree, isARowOfFour, isARowOfThree)
 
-      if (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree) {
-        setDraggedItem(null)
-        setReplacedItem(null)
-      } else {
-        // workingArr[itemReplacedId] = replacedItem.getAttribute('src')
-        // workingArr[itemDraggedId] = draggedItem.getAttribute('src')
-        // console.log('CA2: ', colorArr)
-        // setColorArr([...colorArr])
-      }
+      //  if (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree) {
+      setDraggedItem(null)
+      setReplacedItem(null)
+    // } else {
+      // workingArr[itemReplacedId] = replacedItem.getAttribute('src')
+      // workingArr[itemDraggedId] = draggedItem.getAttribute('src')
+      // console.log('CA2: ', colorArr)
+      // setColorArr([...colorArr])
+      //   }
     }
   }
 
