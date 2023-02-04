@@ -2,21 +2,6 @@ import { width, candyColors } from '../Board'
 import blank from '../images/blank.png'
 
 
-export function replaceWithBlank (matchedCoords, colorArr) {
-  matchedCoords.forEach(item => {
-    const coords = item.split(',').map(Number)
-    colorArr[coords[0]][coords[1]] = blank
-  })
-  
-  return colorArr
-}
-
-// Object.keys(checkArray).forEach(item => {
-//   const coords = item.split(',').map(Number)
-//   colorArr[coords[0]][coords[1]] = blank
-// })
-
-
 function getCol(colorArr, index) {
   const col = []
   for (let i = 0; i < width; i++) {
@@ -35,34 +20,57 @@ export function checkMovedCandy (colorArr, dragged, replaced) {
   const replacedRow = colorArr[replaced[0]]
   const replacedCol = getCol(colorArr, replaced)
  
-  const results = {
-   draggedRow: checkLines(draggedRow, colorArr[dragged[0]][dragged[1]], dragged),
-   draggedCol: checkLines(draggedCol, colorArr[dragged[0]][dragged[1]], dragged),
-   replacedRow: checkLines(replacedRow, colorArr[replaced[0]][replaced[1]], replaced),
-   replacedCol: checkLines(replacedCol, colorArr[replaced[0]][replaced[1]], replaced)
-  }
   
-  Object.keys(results).forEach((element, i) => {if (results[element] === false){ delete results[element]}})
-  //console.log(results)
-  return results
-  }
+  let checkedDraggedRow = checkLines(draggedRow, colorArr[dragged[0]][dragged[1]], dragged)
+  let checkedDraggedCol = checkLines(draggedCol, colorArr[dragged[0]][dragged[1]], dragged)
+  let checkedReplacedRow = checkLines(replacedRow, colorArr[replaced[0]][replaced[1]], replaced)
+  let checkedReplacedCol = checkLines(replacedCol, colorArr[replaced[0]][replaced[1]], replaced)
+
+  let results = {
+                col1: checkedDraggedCol,
+                col2: checkedReplacedCol,
+                row1: checkedDraggedRow,
+                row2: checkedReplacedRow
+  } 
+
+ Object.keys(results).forEach(element => {if (results[element] == false){ delete results[element]}})
+ 
+ return results
+}
+
+export function replaceWithBlank (matchedInfo, colorArr) {
+  Object.keys(matchedInfo).forEach(type => {if (type.includes('col')){
+    console.log(matchedInfo[type][0])
+   let col = matchedInfo[type][1][1]
+   matchedInfo[type][0].forEach(row => {
+    colorArr[row][col] = blank
+    })
+  }})
+  Object.keys(matchedInfo).forEach(type => {if (type.includes('row')){
+    let row = matchedInfo[type][1][0]
+    matchedInfo[type][0].forEach(col => {
+      colorArr[row][col] = blank
+    })
+  }})
+  return colorArr
+
+}
+
+  // Object.keys(checkArray).forEach(item => {
+//   const coords = item.split(',').map(Number)
+//   colorArr[coords[0]][coords[1]] = blank
+// })
 
 
 function checkLines (line, color, coords) {
-  if( checkForSeven(line, color, coords) != false) {
-    return [checkForSeven(line, color, coords), 7]
-  } else if (checkForSix(line, color, coords) != false) {
-    return [checkForSix(line, color, coords), 6]
-  } else if (checkForFive(line, color, coords) != false) {
-    return [checkForFive(line, color, coords), 5]
-  } else if (checkForFour(line, color, coords) != false) {
-    return [checkForFour(line, color, coords), 4]
-  } else if (checkForThree(line, color, coords) != false) {
-    return [checkForThree(line, color, coords), 3]
-  } else {
-    return false
-  }
+  return checkForSeven(line, color, coords) != false ? checkForSeven(line, color, coords)
+       : checkForSix(line, color, coords) != false ? checkForSix(line, color, coords)
+       : checkForFive(line, color, coords) != false ? checkForFive(line, color, coords)
+       : checkForFour(line, color, coords) != false ? checkForFour(line, color, coords)
+       : checkForThree(line, color, coords) != false ? checkForThree(line, color, coords)
+       : false
 }
+
 
 function checkForThree (line, color, coords) {
  for (let i = 0; i < line.length - 3; i++) {
@@ -72,28 +80,29 @@ function checkForThree (line, color, coords) {
     [`${i + 2}`]: line[i + 2],
   }
   if (Object.values(checkLine).every(item => item === color)) {
-    return [i, coords]
+    return [Object.keys(checkLine), coords]
   } 
  } 
  return false
 }
 
-export function checkForFour (line, color, coords) {
+function checkForFour (line, color, coords) {
   for (let i = 0; i < line.length - 4; i++) {
     const checkLine = {
       [`${i}`]: line[i],
       [`${i + 1}`]: line[i + 1],
       [`${i + 2}`]: line[i + 2],
-      [`${i + 1}`]: line[i + 3]
+      [`${i + 3}`]: line[i + 3]
     }
     if (Object.values(checkLine).every(item => item === color)) {
-      return [i, coords]
+      console.log(4, checkLine)
+      return [Object.keys(checkLine), coords]
     } 
    } 
    return false
   }
 
-export function checkForFive (line, color, coords) {
+function checkForFive (line, color, coords) {
   for (let i = 0; i < line.length - 5; i++) {
     const checkLine = {
       [`${i}`]: line[i],
@@ -103,13 +112,13 @@ export function checkForFive (line, color, coords) {
       [`${i + 4}`]: line[i + 4]
     }
     if (Object.values(checkLine).every(item => item === color)) {
-      return [i, coords]
+      return [Object.keys(checkLine), coords]
     } 
    } 
    return false
 }
 
-export function checkForSix (line, color, coords) {
+function checkForSix (line, color, coords) {
   for (let i = 0; i < line.length - 6; i++) {
     const checkLine = {
       [`${i}`]: line[i],
@@ -120,15 +129,15 @@ export function checkForSix (line, color, coords) {
       [`${i + 5}`]: line[i + 5]
     }
     if (Object.values(checkLine).every(item => item === color)) {
-      return [i, coords]
+      return [Object.keys(checkLine), coords]
     } 
    } 
    return false
 }
 
-export function checkForSeven (line, color, coords) {
+function checkForSeven (line, color, coords) {
    if (Object.values(line).every(item => item === color)) {
-    return [0, coords]
+    return [[0, 1, 2, 3, 4, 5, 6, 7], coords]
     }
   return false
 }

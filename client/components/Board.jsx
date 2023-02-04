@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import createBoard from './utilities/CreateBoard'
-import { checkforColFour, checkforColThree, checkforRowFour, checkforRowThree, checkMovedCandy } from './utilities/Checkfunctions'
+import { checkMovedCandy, replaceWithBlank } from './utilities/Checkfunctions'
 
 import blueCandy from './images/blue-candy.png'
 import greenCandy from './images/green-candy.png'
@@ -31,6 +31,7 @@ export default function Board () {
 
   function handleOnDragEnd (e, copyArr) {
     const workingArr = JSON.parse(JSON.stringify(copyArr))
+    // const workingArr = copyArr
     e.preventDefault()
 
     const itemDraggedId = draggedItem.getAttribute('id').split(',').map(Number)
@@ -110,24 +111,23 @@ export default function Board () {
     }
 
     const validMove = validMoves.some(item => item[0] === itemReplacedId[0] && item[1] === itemReplacedId[1])
+
     if (validMove) {
       workingArr[itemReplacedId[0]][itemReplacedId[1]] = draggedItem.getAttribute('src')
       workingArr[itemDraggedId[0]][itemDraggedId[1]] = replacedItem.getAttribute('src')
       // TODO: Check changed candies only
 
       if (Object.keys(checkMovedCandy(workingArr, itemDraggedId, itemReplacedId)).length > 0) {
-        const results = checkMovedCandy(workingArr, itemDraggedId, itemReplacedId)
+        setCandyArr([...workingArr])
+        setTimeout(() => setCandyArr(replaceWithBlank(checkMovedCandy(workingArr, itemDraggedId, itemReplacedId), workingArr)), 100)
       }
-      //  setDraggedItem(null)
-      // setReplacedItem(null)
-      //  if (isARowOfFour || isAColOfFour || isARowOfThree || isAColOfThree) {
 
-    // } else {
-      // workingArr[itemReplacedId] = replacedItem.getAttribute('src')
-      // workingArr[itemDraggedId] = draggedItem.getAttribute('src')
-      // console.log('CA2: ', colorArr)
-      // setColorArr([...colorArr])
-      //   }
+      setDraggedItem(null)
+      setReplacedItem(null)
+    } else {
+      workingArr[itemReplacedId] = replacedItem.getAttribute('src')
+      workingArr[itemDraggedId] = draggedItem.getAttribute('src')
+      setCandyArr([...workingArr])
     }
   }
 
