@@ -71,7 +71,7 @@ function checkLines (line, color, coords) {
 }
 
 function checkForThree (line, color, coords) {
-  for (let i = 0; i < line.length - 3; i++) {
+  for (let i = 0; i < line.length - 2; i++) {
     const checkLine = {
       [`${i}`]: line[i],
       [`${i + 1}`]: line[i + 1],
@@ -85,14 +85,16 @@ function checkForThree (line, color, coords) {
 }
 
 function checkForFour (line, color, coords) {
-  for (let i = 0; i < line.length - 4; i++) {
+  for (let i = 0; i < line.length - 3; i++) {
     const checkLine = {
       [`${i}`]: line[i],
       [`${i + 1}`]: line[i + 1],
       [`${i + 2}`]: line[i + 2],
       [`${i + 3}`]: line[i + 3]
     }
+    console.log('cl: ', checkLine)
     if (Object.values(checkLine).every(item => item === color)) {
+      console.log('cl: ', checkLine)
       return [Object.keys(checkLine), coords]
     }
   }
@@ -100,7 +102,7 @@ function checkForFour (line, color, coords) {
 }
 
 function checkForFive (line, color, coords) {
-  for (let i = 0; i < line.length - 5; i++) {
+  for (let i = 0; i < line.length - 4; i++) {
     const checkLine = {
       [`${i}`]: line[i],
       [`${i + 1}`]: line[i + 1],
@@ -116,7 +118,7 @@ function checkForFive (line, color, coords) {
 }
 
 function checkForSix (line, color, coords) {
-  for (let i = 0; i < line.length - 6; i++) {
+  for (let i = 0; i < line.length - 5; i++) {
     const checkLine = {
       [`${i}`]: line[i],
       [`${i + 1}`]: line[i + 1],
