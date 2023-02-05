@@ -56,11 +56,6 @@ export function replaceWithBlank (matchedInfo, colorArr) {
   return colorArr
 }
 
-// Object.keys(checkArray).forEach(item => {
-//   const coords = item.split(',').map(Number)
-//   colorArr[coords[0]][coords[1]] = blank
-// })
-
 function checkLines (line, color, coords) {
   return checkForSeven(line, color, coords) !== false ? checkForSeven(line, color, coords)
     : checkForSix(line, color, coords) !== false ? checkForSix(line, color, coords)
@@ -142,7 +137,7 @@ function checkForSeven (line, color, coords) {
 export function dropCandyToEmpty (candyArray) {
   for (let i = 0; i < width - 1; i++) {
     for (let j = 0; j < width; j++) {
-      if (j === 0 && candyArray[j][i] === blank) {
+      if (j === 0 && candyArray[i][j] === blank) {
         candyArray[j][i] = candyColors[Math.floor(Math.random() * candyColors.length)]
       }
       if (candyArray[i + 1][j] === blank) {
@@ -153,25 +148,3 @@ export function dropCandyToEmpty (candyArray) {
   }
   return candyArray
 }
-
-export function fillInBlanks (colorArr) {
-  for (let i = 0; i < width - 1; i++) {
-    const checkFirstRow = colorArr[0].includes(i)
-  }
-}
-
-// export function newItemsToEmptySpace (colorArr) {
-//   for (let i = 0; i < width * (width - 1); i++) {
-//     const firstRow = Array.apply(null, Array(width)).map((x, i) => { return i })
-//     const checkFirstRow = firstRow.includes(i)
-
-//     if (checkFirstRow && colorArr[i] === blank) {
-//       colorArr[i] = candyColors[Math.floor(Math.random() * candyColors.length)]
-//     }
-
-//     if ((colorArr[i + width] === blank)) {
-//       colorArr[i + width] = colorArr[i]
-//       colorArr[i] = blank
-//     }
-//   }
-// }

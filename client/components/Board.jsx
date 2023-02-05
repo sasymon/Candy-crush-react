@@ -130,22 +130,6 @@ export default function Board () {
     }
   }
 
-  // function newItemsToEmptySpace () {
-  //   for (let i = 0; i < width * (width - 1); i++) {
-  //     const firstRow = Array.apply(null, Array(width)).map((x, i) => { return i })
-  //     const checkFirstRow = firstRow.includes(i)
-
-  //     if (checkFirstRow && colorArr[i] === blank) {
-  //       colorArr[i] = candyColors[Math.floor(Math.random() * candyColors.length)]
-  //     }
-
-  //     if ((colorArr[i + width] === blank)) {
-  //       colorArr[i + width] = colorArr[i]
-  //       colorArr[i] = blank
-  //     }
-  //   }
-  // }
-
   useEffect(() => {
     setCandyArr(createBoard())
   }, [])
@@ -154,12 +138,10 @@ export default function Board () {
     const timer = setInterval(() => {
       setCandyArr(dropCandyToEmpty([...candyArr]))
       // TODO: Frequent match checks
-      // setCandyArr([...candyArr])
-      // newItemsToEmptySpace())
     }, 500)
     return () => clearInterval(timer)
   }, [candyArr])
-  // console.log('CA: ', candyArr)
+
   return (
     <div className='grid-container'>
       {candyArr.map((rows, x) => {
