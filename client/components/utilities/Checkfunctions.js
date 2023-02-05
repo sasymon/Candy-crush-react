@@ -4,7 +4,7 @@ import blank from '../images/blank.png'
 function getCol (colorArr, index) {
   const col = []
   for (let i = 0; i < width; i++) {
-    col.push(colorArr[i][index[1]])
+    col.push(colorArr[i][index])
   }
   return col
 }
@@ -15,9 +15,9 @@ export function checkAll (colorArr) {
 
 export function checkMovedCandy (colorArr, dragged, replaced) {
   const draggedRow = colorArr[dragged[0]]
-  const draggedCol = getCol(colorArr, dragged)
+  const draggedCol = getCol(colorArr, dragged[1])
   const replacedRow = colorArr[replaced[0]]
-  const replacedCol = getCol(colorArr, replaced)
+  const replacedCol = getCol(colorArr, replaced[1])
 
   const checkedDraggedRow = checkLines(draggedRow, colorArr[dragged[0]][dragged[1]], dragged)
   const checkedDraggedCol = checkLines(draggedCol, colorArr[dragged[0]][dragged[1]], dragged)
@@ -92,9 +92,7 @@ function checkForFour (line, color, coords) {
       [`${i + 2}`]: line[i + 2],
       [`${i + 3}`]: line[i + 3]
     }
-    console.log('cl: ', checkLine)
     if (Object.values(checkLine).every(item => item === color)) {
-      console.log('cl: ', checkLine)
       return [Object.keys(checkLine), coords]
     }
   }
@@ -142,12 +140,33 @@ function checkForSeven (line, color, coords) {
 }
 
 export function dropCandyToEmpty (candyArray) {
-  for (let i = 0; i <= width; i++) {
-    candyArray.map(row => {
-      //
-    })
+  console.log(candyArray)
+  for (let i = 0; i < width; i++) {
+    for (let j = 0; j < width - 1; j++) {
+      // console.log(candyArray[j])
+      if (candyArray[j + 1][i] === blank) {
+        candyArray[j + 1][i] = candyArray[j][i]
+        candyArray[j][i] = blank
+        console.log(candyArray)
+      }
+    }
   }
+  return candyArray
 }
+
+// for (let i = 0; i < width * (width - 1); i++) {
+//   const firstRow = Array.apply(null, Array(width)).map((x, i) => { return i })
+//   const checkFirstRow = firstRow.includes(i)
+
+//   if (checkFirstRow && colorArr[i] === '') {
+//     colorArr[i] = candyColors[Math.floor(Math.random() * candyColors.length)]
+//   }
+
+//   if ((colorArr[i + width] === '')) {
+//     colorArr[i + width] = colorArr[i]
+//     colorArr[i] = ''
+//   }
+// }
 
 // export function newItemsToEmptySpace (colorArr) {
 //   for (let i = 0; i < width * (width - 1); i++) {

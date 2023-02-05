@@ -119,8 +119,8 @@ export default function Board () {
       if (Object.keys(checkMovedCandy(workingArr, itemDraggedId, itemReplacedId)).length > 0) {
         setCandyArr([...workingArr])
         setTimeout(() => setCandyArr(replaceWithBlank(checkMovedCandy(workingArr, itemDraggedId, itemReplacedId), workingArr)), 100)
+        setTimeout(() => setCandyArr(dropCandyToEmpty(workingArr)), 100)
       }
-
       setDraggedItem(null)
       setReplacedItem(null)
     } else {
@@ -152,14 +152,14 @@ export default function Board () {
 
   useEffect(() => {
     const timer = setInterval(() => {
-      dropCandyToEmpty([...candyArr])
+      setCandyArr(dropCandyToEmpty([...candyArr]))
       // TODO: Frequent match checks
       // setCandyArr([...candyArr])
       // newItemsToEmptySpace())
-    }, 1000)
+    }, 100)
     return () => clearInterval(timer)
   }, [candyArr])
-
+  // console.log('CA: ', candyArr)
   return (
     <div className='grid-container'>
       {candyArr.map((rows, x) => {
