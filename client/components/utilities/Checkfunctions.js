@@ -140,33 +140,25 @@ function checkForSeven (line, color, coords) {
 }
 
 export function dropCandyToEmpty (candyArray) {
-  console.log(candyArray)
-  for (let i = 0; i < width; i++) {
-    for (let j = 0; j < width - 1; j++) {
-      // console.log(candyArray[j])
-      if (candyArray[j + 1][i] === blank) {
-        candyArray[j + 1][i] = candyArray[j][i]
-        candyArray[j][i] = blank
-        console.log(candyArray)
+  for (let i = 0; i < width - 1; i++) {
+    for (let j = 0; j < width; j++) {
+      if (j === 0 && candyArray[j][i] === blank) {
+        candyArray[j][i] = candyColors[Math.floor(Math.random() * candyColors.length)]
+      }
+      if (candyArray[i + 1][j] === blank) {
+        candyArray[i + 1][j] = candyArray[i][j]
+        candyArray[i][j] = blank
       }
     }
   }
   return candyArray
 }
 
-// for (let i = 0; i < width * (width - 1); i++) {
-//   const firstRow = Array.apply(null, Array(width)).map((x, i) => { return i })
-//   const checkFirstRow = firstRow.includes(i)
-
-//   if (checkFirstRow && colorArr[i] === '') {
-//     colorArr[i] = candyColors[Math.floor(Math.random() * candyColors.length)]
-//   }
-
-//   if ((colorArr[i + width] === '')) {
-//     colorArr[i + width] = colorArr[i]
-//     colorArr[i] = ''
-//   }
-// }
+export function fillInBlanks (colorArr) {
+  for (let i = 0; i < width - 1; i++) {
+    const checkFirstRow = colorArr[0].includes(i)
+  }
+}
 
 // export function newItemsToEmptySpace (colorArr) {
 //   for (let i = 0; i < width * (width - 1); i++) {

@@ -156,7 +156,7 @@ export default function Board () {
       // TODO: Frequent match checks
       // setCandyArr([...candyArr])
       // newItemsToEmptySpace())
-    }, 100)
+    }, 500)
     return () => clearInterval(timer)
   }, [candyArr])
   // console.log('CA: ', candyArr)
