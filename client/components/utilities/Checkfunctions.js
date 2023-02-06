@@ -10,7 +10,25 @@ function getCol (colorArr, index) {
 }
 
 export function checkAll (colorArr) {
-  // TODO: Run all checks on entire array
+  const results = {}
+  for (let i = 0; i <= width - 1; i++) {
+    for (let j = 0; j <= width - 1; j++) {
+      const row = colorArr[i]
+      const col = getCol(colorArr, [j])
+      const color = colorArr[i][j]
+      const coords = [i, j]
+      checkLines(row, color, coords)
+      // console.log(checkLines(row, color, coords))
+      // console.log(row, color, coords)
+      if (checkLines(row, color, coords) !== false) {
+        results[`row${i}` + j] = checkLines(row, color, coords)
+      }
+      if (checkLines(col, color, coords) !== false) {
+        results[`col${i}` + j] = checkLines(col, color, coords)
+      }
+    }
+  }
+  return results
 }
 
 export function checkMovedCandy (colorArr, dragged, replaced) {
@@ -19,6 +37,7 @@ export function checkMovedCandy (colorArr, dragged, replaced) {
   const replacedRow = colorArr[replaced[0]]
   const replacedCol = getCol(colorArr, replaced[1])
 
+  // checkedLines(line, color, coords)
   const checkedDraggedRow = checkLines(draggedRow, colorArr[dragged[0]][dragged[1]], dragged)
   const checkedDraggedCol = checkLines(draggedCol, colorArr[dragged[0]][dragged[1]], dragged)
   const checkedReplacedRow = checkLines(replacedRow, colorArr[replaced[0]][replaced[1]], replaced)
@@ -30,7 +49,7 @@ export function checkMovedCandy (colorArr, dragged, replaced) {
     row1: checkedDraggedRow,
     row2: checkedReplacedRow
   }
-
+  console.log(checkAll(colorArr))
   Object.keys(results).forEach(element => { if (results[element] === false) { delete results[element] } })
 
   return results
@@ -137,8 +156,8 @@ function checkForSeven (line, color, coords) {
 export function dropCandyToEmpty (candyArray) {
   for (let i = 0; i < width - 1; i++) {
     for (let j = 0; j < width; j++) {
-      if (j === 0 && candyArray[i][j] === blank) {
-        candyArray[j][i] = candyColors[Math.floor(Math.random() * candyColors.length)]
+      if (i === 0 && candyArray[i][j] === blank) {
+        candyArray[i][j] = candyColors[Math.floor(Math.random() * candyColors.length)]
       }
       if (candyArray[i + 1][j] === blank) {
         candyArray[i + 1][j] = candyArray[i][j]

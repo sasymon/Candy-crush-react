@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 
 import createBoard from './utilities/CreateBoard'
-import { checkMovedCandy, replaceWithBlank, dropCandyToEmpty } from './utilities/Checkfunctions'
+import { checkMovedCandy, replaceWithBlank, dropCandyToEmpty, checkAll } from './utilities/Checkfunctions'
 
 import blueCandy from './images/blue-candy.png'
 import greenCandy from './images/green-candy.png'
@@ -128,6 +128,7 @@ export default function Board () {
       workingArr[itemDraggedId] = draggedItem.getAttribute('src')
       setCandyArr([...workingArr])
     }
+    console.log(checkAll(candyArr))
   }
 
   useEffect(() => {
@@ -136,6 +137,7 @@ export default function Board () {
 
   useEffect(() => {
     const timer = setInterval(() => {
+      setCandyArr(dropCandyToEmpty((replaceWithBlank((checkAll(candyArr)), candyArr))))
       setCandyArr(dropCandyToEmpty([...candyArr]))
       // TODO: Frequent match checks
     }, 500)
